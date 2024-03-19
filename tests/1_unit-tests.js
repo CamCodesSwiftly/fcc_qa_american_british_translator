@@ -13,7 +13,6 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: Mangoes are my favourite fruit."
 			);
 		});
 		//#2
@@ -23,7 +22,6 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: I ate yoghurt for breakfast."
 			);
 		});
 		//#3
@@ -33,19 +31,17 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: We had a party at my friend's flat."
 			);
 		});
-		//TODO: #4 only translate full words, never subwords (trashcan/bin != trash can/rubbish bin)
-		// test("#trashcan", () => {
-		// 	let text = "Can you toss this in the trashcan for me?";
-		// 	let translation = "Can you toss this in the bin for me?";
-		// 	assert.strictEqual(
-		// 		translator.translateAtoB(text),
-		// 		translation,
-		// 		"Translation must be: Can you toss this in the bin for me?"
-		// 	);
-		// });
+		//#4
+		test("#trashcan", () => {
+			let text = "Can you toss this in the trashcan for me?";
+			let translation = "Can you toss this in the bin for me?";
+			assert.strictEqual(
+				translator.translateAtoB(text),
+				translation,
+			);
+		});
 		//#5
 		test("#parking lot", () => {
 			let text = "The parking lot was full.";
@@ -53,20 +49,17 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: The car park was full."
 			);
 		});
-		//TODO: #6  "rube goldberg machine" is correctly translated
-		//TODO:     but the whole sentence is not. why?
-		// test("#rube goldberg", () => {
-		// 	let text = "Like a high tech Rube Goldberg machine.";
-		// 	let translation = "Like a high tech Heath Robinson device.";
-		// 	assert.strictEqual(
-		// 		translator.translateAtoB(text),
-		// 		translation,
-		// 		"Translation must be: Like a high tech Heath Robinson device."
-		// 	);
-		// });
+		//#6
+		test("#rube goldberg", () => {
+			let text = "Like a high tech Rube Goldberg machine.";
+			let translation = "Like a high tech Heath Robinson device.";
+			assert.strictEqual(
+				translator.translateAtoB(text),
+				translation,
+			);
+		});
 		//#7
 		test("#hooky", () => {
 			let text = "To play hooky means to skip class or work.";
@@ -74,7 +67,6 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: To bunk off means to skip class or work."
 			);
 		});
 		//#8
@@ -84,29 +76,26 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: No Mr Bond, I expect you to die."
 			);
 		});
-		//#9
+		// #9
 		test("#drgosh", () => {
 			let text = "Dr. Grosh will see you now.";
 			let translation = "Dr Grosh will see you now.";
 			assert.strictEqual(
 				translator.translateAtoB(text),
 				translation,
-				"Translation must be: Dr Grosh will see you now."
 			);
 		});
-		//TODO: #10 Uhrzeiten : => .
-		// test("#lunchtime", () => {
-		// 	let text = "Lunch is at 12:15 today.";
-		// 	let translation = "Lunch is at 12.15 today.";
-		// 	assert.strictEqual(
-		// 		translator.translateAtoB(text),
-		// 		translation,
-		// 		"Translation must be: Lunch is at 12.15 today."
-		// 	);
-		// });
+		//#10
+		test("#lunchtime", () => {
+			let text = "Lunch is at 12:15 today.";
+			let translation = "Lunch is at 12.15 today.";
+			assert.strictEqual(
+				translator.translateAtoB(text),
+				translation,
+			);
+		});
 	});
 	suite("British To English", () => {
 		//#11
@@ -116,19 +105,17 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateBtoA(text),
 				translation,
-				"Translation must be: We watched the soccer match for a while."
 			);
 		});
-		//TODO: #12 What the fuck? Console.log
-		// test("#paracetamol", () => {
-		// 	let text = "Paracetamol takes up to an hour to work.";
-		// 	let translation = "Tylenol takes up to an hour to work.";
-		// 	assert.strictEqual(
-		// 		translator.translateBtoA(text),
-		// 		translation,
-		// 		"Translation must be: Tylenol takes up to an hour to work."
-		// 	);
-		// });
+		//#12
+		test("#paracetamol", () => {
+			let text = "Paracetamol takes up to an hour to work.";
+			let translation = "Tylenol takes up to an hour to work.";
+			assert.strictEqual(
+				translator.translateBtoA(text),
+				translation,
+			);
+		});
 		//#13
 		test("#caramelise", () => {
 			let text = "First, caramelise the onions.";
@@ -136,29 +123,26 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateBtoA(text),
 				translation,
-				"Translation must be: First, caramelize the onions."
 			);
 		});
-		//TODO: #14 Barlic? What the fuck? Debug 
-		// test("#funfair", () => {
-		// 	let text = "I spent the bank holiday at the funfair.";
-		// 	let translation = "I spent the public holiday at the carnival.";
-		// 	assert.strictEqual(
-		// 		translator.translateBtoA(text),
-		// 		translation,
-		// 		"Translation must be: I spent the public holiday at the carnival."
-		// 	);
-		// });
+		//#14
+		test("#funfair", () => {
+			let text = "I spent the bank holiday at the funfair.";
+			let translation = "I spent the public holiday at the carnival.";
+			assert.strictEqual(
+				translator.translateBtoA(text),
+				translation,
+			);
+		});
 		//TODO: #15 "Zwischentranslating" könnte ein Problem sein
-		// test("#bickychippy", () => {
-		// 	let text = "I had a bicky then went to the chippy.";
-		// 	let translation = "I had a cookie then went to the fish-and-chip shop.";
-		// 	assert.strictEqual(
-		// 		translator.translateBtoA(text),
-		// 		translation,
-		// 		"Translation must be: I had a cookie then went to the fish-and-chip shop."
-		// 	);
-		// });
+		test("#bickychippy", () => {
+			let text = "I had a bicky then went to the chippy.";
+			let translation = "I had a cookie then went to the fish-and-chip shop.";
+			assert.strictEqual(
+				translator.translateBtoA(text),
+				translation,
+			);
+		});
 		//#16
 		test("#bitsbobs", () => {
 			let text = "I've just got bits and bobs in my bum bag.";
@@ -166,29 +150,27 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateBtoA(text),
 				translation,
-				"Translation must be: I've just got odds and ends in my fanny pack."
 			);
 		});
 		//#17
 		test("#boxtedairfield", () => {
 			let text = "The car boot sale at Boxted Airfield was called off.";
-			let translation = "The swap meet at Boxted Airfield was called off.";
+			let translation =
+				"The swap meet at Boxted Airfield was called off.";
 			assert.strictEqual(
 				translator.translateBtoA(text),
 				translation,
-				"Translation must be: The swap meet at Boxted Airfield was called off."
 			);
 		});
-		//TODO: #18 Never translate subwords
-		// test("#mrkalyani", () => {
-		// 	let text = "Have you met Mrs Kalyani?";
-		// 	let translation = "Have you met Mrs. Kalyani?";
-		// 	assert.strictEqual(
-		// 		translator.translateBtoA(text),
-		// 		translation,
-		// 		"Translation must be: Have you met Mrs. Kalyani?"
-		// 	);
-		// });
+		//#18
+		test("#mrkalyani", () => {
+			let text = "Have you met Mrs Kalyani?";
+			let translation = "Have you met Mrs. Kalyani?";
+			assert.strictEqual(
+				translator.translateBtoA(text),
+				translation,
+			);
+		});
 		//#19
 		test("#ProfJoyner", () => {
 			let text = "Prof Joyner of King's College, London.";
@@ -196,18 +178,23 @@ suite("Unit Tests", () => {
 			assert.strictEqual(
 				translator.translateBtoA(text),
 				translation,
-				"Translation must be: Prof. Joyner of King's College, London."
 			);
 		});
-		//TODO: #20 Uhrzeiten
-		// test("#teatime", () => {
-		// 	let text = "Tea time is usually around 4 or 4.30.";
-		// 	let translation = "Tea time is usually around 4 or 4:30.";
-		// 	assert.strictEqual(
-		// 		translator.translateBtoA(text),
-		// 		translation,
-		// 		"Translation must be: Tea time is usually around 4 or 4:30."
-		// 	);
-		// })
+		// #20
+		test("#teatime", () => {
+			let text = "Tea time is usually around 4 or 4.30.";
+			let translation = "Tea time is usually around 4 or 4:30.";
+			assert.strictEqual(translator.translateBtoA(text), translation);
+		});
+		// #testing
+		test("#testing", () => {
+			let text = "Such a recce shooger RECCE.";
+			let translation = "Such a recon shooger recon.";
+			assert.strictEqual(
+				translator.translateBtoA(text),
+				translation
+			);
+		});
 	});
 });
+

@@ -8,41 +8,41 @@ chai.use(chaiHttp);
 let Translator = require("../components/translator.js");
 
 suite("Functional Tests", () => {
-	// 	test("#1 valid text valid locale", function (done) {
-	// 		chai.request(server)
-	// 			.post("/api/translate")
-	// 			.send({
-	// 				text: "Mangoes are my favorite fruit.",
-	// 				locale: "american-to-british",
-	// 			})
-	// 			// Provide the desired query parameters
-	// 			.end(function (err, res) {
-	// 				assert.equal(err, null); // No error should occur
-	// 				assert.equal(res.status, 200);
-	// 				assert.property(
-	// 					res.body,
-	// 					"text",
-	// 					"text property should exist in response"
-	// 				);
-	// 				assert.property(
-	// 					res.body,
-	// 					"translation",
-	// 					"translation property should exist in response"
-	// 				);
+		test("#1 valid text valid locale", function (done) {
+			chai.request(server)
+				.post("/api/translate")
+				.send({
+					text: "Mangoes are my favorite fruit.",
+					locale: "american-to-british",
+				})
+				// Provide the desired query parameters
+				.end(function (err, res) {
+					assert.equal(err, null); // No error should occur
+					assert.equal(res.status, 200);
+					assert.property(
+						res.body,
+						"text",
+						"text property should exist in response"
+					);
+					assert.property(
+						res.body,
+						"translation",
+						"translation property should exist in response"
+					);
 
-	// 				assert.strictEqual(
-	// 					res.body.text,
-	// 					"Mangoes are my favorite fruit.",
-	// 					"text property must be exactly -Mangoes are my favorite fruit.-"
-	// 				);
-	// 				assert.strictEqual(
-	// 					res.body.translation,
-	// 					"Mangoes are my favourite fruit.",
-	// 					"Translation property must be exactly -Mangoes are my favourite fruit.-"
-	// 				);
-	// 				done();
-	// 			});
-	// 	});
+					assert.strictEqual(
+						res.body.text,
+						"Mangoes are my favorite fruit.",
+						"text property must be exactly -Mangoes are my favorite fruit.-"
+					);
+					assert.strictEqual(
+						res.body.translation,
+						"Mangoes are my favourite fruit.",
+						"Translation property must be exactly -Mangoes are my favourite fruit.-"
+					);
+					done();
+				});
+		});
 	test("#2 valid text invalid locale", function (done) {
 		chai.request(server)
 			.post("/api/translate")

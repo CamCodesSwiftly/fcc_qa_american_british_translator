@@ -36,7 +36,7 @@ module.exports = function (app) {
 		}
 
 		// no translation necessary?
-		if (text === translation) {
+		if (text === translation.translation) {
 			return res.json({
 				text: text,
 				translation: "Everything looks good to me!",
@@ -46,7 +46,7 @@ module.exports = function (app) {
 		// all valid, translate normally
 		res.json({
 			text: text,
-			translation: translation,
+			translation: translation.translationHighlighted,
 		});
 	});
 };

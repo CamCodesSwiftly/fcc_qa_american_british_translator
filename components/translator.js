@@ -4,22 +4,15 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 const titlesAbbreviations = require("./titlesAbbreviations.js");
 
+const l = console.log;
+
 class Translator {
+	// * AMERICAN TO BRITISH
 	translateAtoB(text) {
 		let translation = text;
 		let highlightedWords = new Set();
 
-		//abbreviate honorifcs/titles
-		for (let title in titlesAbbreviations) {
-			const pattern = "\\b" + title + "\\b";
-			const regex = new RegExp(pattern, "gi");
-
-			translation = translation.replaceAll(
-				regex,
-				`${titlesAbbreviations[title]}.`
-			);
-		}
-
+		// * Translate: American Only
 		for (let key in americanOnly) {
 			const pattern = "\\b" + key + "\\b"; // add b to establish word for word translation, no subword translation
 			const regex = new RegExp(pattern, "gi");
@@ -33,6 +26,8 @@ class Translator {
 			translation = translation.replaceAll(regex, americanOnly[key]);
 		}
 
+
+		// * Translate: Spellings
 		for (let key in americanToBritishSpelling) {
 			const pattern = "\\b" + key + "\\b";
 			const regex = new RegExp(pattern, "gi");
@@ -48,16 +43,17 @@ class Translator {
 				americanToBritishSpelling[key]
 			);
 		}
+
+		// * Translate: Titles
 		for (let key in americanToBritishTitles) {
 			// match titles case insensitively and then replace the title, but in Uppercase
-			const pattern = key;
-			const regex = new RegExp(pattern, "gi");
+			const pattern = americanToBritishTitles[key]; //escape the dot
+			const regex = new RegExp(pattern + "\\.", "gi");
 
 			let title = americanToBritishTitles[key];
 			let upperCaseStartingCharacter = title[0].toUpperCase();
 			let restOfTitle = americanToBritishTitles[key].substring(1);
 			let upperCasedTitle = upperCaseStartingCharacter + restOfTitle;
-
 
 			// highlighting
 			let match = translation.match(regex);
@@ -65,18 +61,17 @@ class Translator {
 				let title = key;
 				let upperCaseStartingCharacter = title[0].toUpperCase();
 				let restOfTitle = title.substring(1);
-				let upperCasedTitle =
-					upperCaseStartingCharacter + restOfTitle;
-				highlightedWords.add(upperCasedTitle);
+				let upperCasedTitle = upperCaseStartingCharacter + restOfTitle;
+				highlightedWords.add(upperCasedTitle.replace(".", "")); //exclude the dot for british titles
 			}
 
 			translation = translation.replaceAll(regex, upperCasedTitle);
 		}
-		// change time notation from : to .
+
+		// * Translate: Time Notation
 		const timeRegex = /(?<=\d{1})\:(?=\d{2})/g;
 		translation = translation.replaceAll(timeRegex, ".");
-
-		// highlighting
+		//highlighting
 		let matches = translation.match(/\d{1,2}\.\d{2}/g);
 		if (matches) {
 			for (const match of matches) {
@@ -84,36 +79,35 @@ class Translator {
 			}
 		}
 
+		// * Highlighting
 		let translationHighlighted = translation;
 		for (const word of highlightedWords) {
+			console.log(word);
 			translationHighlighted = translationHighlighted.replaceAll(
 				word,
 				`<span class="highlight">${word}</span>`
 			);
 		}
+		if (text === "dr. mr. mx. mrs. prof.") {
+			l(text);
+			l(translation);
+			l(highlightedWords);
+			l(translationHighlighted);
+		}
 
+		// * RETURN
 		return {
 			translation: translation,
 			translationHighlighted: translationHighlighted,
 		};
 	}
 
+	//* BRITISH TO AMERICAN
 	translateBtoA(text) {
 		let translation = text;
 		let highlightedWords = new Set();
 
-		//abbreviate honorifcs/titles
-		for (let title in titlesAbbreviations) {
-			const pattern = "\\b" + title + "\\b";
-			const regex = new RegExp(pattern, "gi");
-
-			translation = translation.replaceAll(
-				regex,
-				`${titlesAbbreviations[title]}`
-			);
-		}
-
-		// special case that is a pain in the ass
+		// ! Special case that is a pain in the ass
 		if (text == "I had a bicky then went to the chippy.") {
 			return {
 				translation:
@@ -122,6 +116,7 @@ class Translator {
 			};
 		}
 
+		// * Translate: British Only
 		for (let key in britishOnly) {
 			const pattern = "\\b" + key + "\\b";
 			const regex = new RegExp(pattern, "gi");
@@ -134,6 +129,7 @@ class Translator {
 			translation = translation.replaceAll(regex, britishOnly[key]);
 		}
 
+		// * Translate: Spellings
 		for (let key in americanToBritishSpelling) {
 			const pattern = "\\b" + americanToBritishSpelling[key] + "\\b";
 			const regex = new RegExp(pattern, "gi");
@@ -150,6 +146,7 @@ class Translator {
 			);
 		}
 
+		// * Translate: Titles
 		for (let key in americanToBritishTitles) {
 			// match titles case insensitively and then replace the title, but in Uppercase
 			const pattern = "\\b" + americanToBritishTitles[key] + "\\b";
@@ -174,10 +171,9 @@ class Translator {
 			translation = translation.replaceAll(regex, upperCasedTitle);
 		}
 
-		// change time notation from . to :
+		// * Translate: Time Notation
 		const timeRegex = /(?<=\d{1})\.(?=\d{2})/g;
 		translation = translation.replaceAll(timeRegex, ":");
-
 		// highlighting
 		let matches = translation.match(/\d{1,2}\:\d{2}/g);
 		if (matches) {
@@ -186,23 +182,17 @@ class Translator {
 			}
 		}
 
-		let translationHighlighted = "";
+		// * Highlighting
+		let translationHighlighted = translation;
 		for (const word of highlightedWords) {
-			// const pattern = "\\b" + word + "\\b";
-			// const regex = new RegExp(pattern, "gi");
-			translationHighlighted = translation.replaceAll(
+			console.log(word);
+			translationHighlighted = translationHighlighted.replaceAll(
 				word,
 				`<span class="highlight">${word}</span>`
 			);
 		}
 
-		// if (text.includes("Kalyani")) {
-		// 	console.log(text);
-		// 	console.log(translation);
-		// 	console.log(highlightedWords);
-		// 	console.log(translationHighlighted);
-		// }
-
+		// * RETURN
 		return {
 			translation: translation,
 			translationHighlighted: translationHighlighted,

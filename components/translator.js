@@ -13,46 +13,42 @@ class Translator {
 		let highlightedWords = new Set();
 
 		// * Translate: American Only
-		for (let key in americanOnly) {
+		for (const [key, value] of Object.entries(americanOnly)) {
 			const pattern = "\\b" + key + "\\b"; // add b to establish word for word translation, no subword translation
 			const regex = new RegExp(pattern, "gi");
 
 			//highlighting
 			let match = translation.match(regex);
 			if (match) {
-				highlightedWords.add(americanOnly[key]);
+				highlightedWords.add(value);
 			}
 
-			translation = translation.replaceAll(regex, americanOnly[key]);
+			translation = translation.replaceAll(regex, value);
 		}
 
-
 		// * Translate: Spellings
-		for (let key in americanToBritishSpelling) {
+		for (const [key, value] of Object.entries(americanToBritishSpelling)) {
 			const pattern = "\\b" + key + "\\b";
 			const regex = new RegExp(pattern, "gi");
 
 			//highlighting
 			let match = translation.match(regex);
 			if (match) {
-				highlightedWords.add(americanToBritishSpelling[key]);
+				highlightedWords.add(value);
 			}
 
-			translation = translation.replaceAll(
-				regex,
-				americanToBritishSpelling[key]
-			);
+			translation = translation.replaceAll(regex, value);
 		}
 
 		// * Translate: Titles
-		for (let key in americanToBritishTitles) {
+		for (const [key, value] of Object.entries(americanToBritishTitles)) {
 			// match titles case insensitively and then replace the title, but in Uppercase
-			const pattern = americanToBritishTitles[key]; //escape the dot
+			const pattern = value; //escape the dot
 			const regex = new RegExp(pattern + "\\.", "gi");
 
-			let title = americanToBritishTitles[key];
+			let title = value;
 			let upperCaseStartingCharacter = title[0].toUpperCase();
-			let restOfTitle = americanToBritishTitles[key].substring(1);
+			let restOfTitle = value.substring(1);
 			let upperCasedTitle = upperCaseStartingCharacter + restOfTitle;
 
 			// highlighting
@@ -117,21 +113,21 @@ class Translator {
 		}
 
 		// * Translate: British Only
-		for (let key in britishOnly) {
+		for (const [key, value] of Object.entries(britishOnly)) {
 			const pattern = "\\b" + key + "\\b";
 			const regex = new RegExp(pattern, "gi");
 
 			let match = translation.match(regex);
 			if (match) {
-				highlightedWords.add(britishOnly[key]);
+				highlightedWords.add(value);
 			}
 
-			translation = translation.replaceAll(regex, britishOnly[key]);
+			translation = translation.replaceAll(regex, value);
 		}
 
 		// * Translate: Spellings
-		for (let key in americanToBritishSpelling) {
-			const pattern = "\\b" + americanToBritishSpelling[key] + "\\b";
+		for (const [key, value] of Object.entries(americanToBritishSpelling)) {
+			const pattern = "\\b" + value + "\\b";
 			const regex = new RegExp(pattern, "gi");
 
 			// highlighting
@@ -147,9 +143,9 @@ class Translator {
 		}
 
 		// * Translate: Titles
-		for (let key in americanToBritishTitles) {
+		for (const [key, value] of Object.entries(americanToBritishTitles)) {
 			// match titles case insensitively and then replace the title, but in Uppercase
-			const pattern = "\\b" + americanToBritishTitles[key] + "\\b";
+			const pattern = "\\b" + value + "\\b";
 			const regex = new RegExp(pattern, "gi");
 
 			let title = key;
@@ -160,7 +156,7 @@ class Translator {
 			// highlighting
 			let match = translation.match(regex);
 			if (match) {
-				let title = americanToBritishTitles[key];
+				let title = value;
 				let upperCaseStartingCharacter = title[0].toUpperCase();
 				let restOfTitle = title.substring(1);
 				let upperCasedTitle =
